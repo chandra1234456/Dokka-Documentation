@@ -72,11 +72,7 @@ run this in terminal
 ## 6. 📚 Usage Examples
 Show **how to use main functionalities** (like API calls or UI flows).
 
-```markdown
-## 📚 Usage
 
-
-```
 ## 🔧 Troubleshooting
 - **App crashes at start?** → Check if `google-services.json` is added
 - **Ads not showing?** → Use Google test Ad IDs during development

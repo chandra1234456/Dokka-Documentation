@@ -5,6 +5,18 @@ import java.util.UUID
 
 
 /**
+ * ✅ Summary: When to Use Which?
+ * @param → For function signatures inputs.
+ * @return → For function signatures outputs.
+ * @throws → When a function may throw errors
+ * @exception → When a function may throw errors.
+ * @since → For versioning in libraries.
+ * @sample → To show usage examples.
+ * @see → Cross-reference related APIs.
+ * @suppress → Hide internal APIs.
+ * @autor → Optional, rarely used in team projects.
+ */
+/**
  * This Starting Page For Arthematic Operations
  *
  */
@@ -27,9 +39,10 @@ fun multiply(value1 :Int,value2 :Int): Int {
 }
 
 /**
+ * @see generateMD5
  * Generates a random universally unique identifier (UUID).
  * @return A newly generated [UUID] value, for example:
- * `ed49c7d9-8f90-424f-8a46-6d8be3fb3678`.
+ * `ed49c7d9-8f90-424f-8a46-6d8be3fb3678`
  */
 
 fun generateRandomUUID() : UUID = UUID.randomUUID()
