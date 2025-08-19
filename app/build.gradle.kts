@@ -1,9 +1,11 @@
 import javax.xml.parsers.DocumentBuilderFactory
+import org.jetbrains.dokka.gradle.DokkaTask
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("org.jetbrains.dokka") version "1.9.20"  // ✅ add this
+    id("org.jetbrains.dokka")  // ✅ add this
+
 }
 subprojects {
     apply(plugin = "org.jetbrains.dokka")
@@ -18,7 +20,6 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0-SNAPSHOT"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -41,7 +42,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -50,6 +50,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation("org.jetbrains.dokka:gfm-plugin:1.9.20")
+    implementation("org.jetbrains.dokka:javadoc-plugin:1.9.20")
+    implementation("org.jetbrains.dokka:jekyll-plugin:1.9.20")
 }
 
 
@@ -90,44 +93,81 @@ dependencies {
 // ℹ️ About Markdown:
 //   Markdown is a lightweight text formatting language.
 //   It’s easy to read in plain text and can be converted into HTML, PDF, DOCX, etc.
-// ---------------------------------------------------------------
-fun org.jetbrains.dokka.gradle.DokkaTask.configureDokkaDefaults() {
-    val appName = getAppName()
-    moduleName.set("$appName v${android.defaultConfig.versionName}") //APP Name & Version
 
+//layout.buildDirectory --This Build Folder ..That’s expected because Dokka writes them into your build/ folder, and by default build/ is ignored by Git (via .gitignore).
+// outputDirectory.set(projectDir  Use Separate Directory
+// ---------------------------------------------------------------
+// Centralized Dokka defaults
+fun DokkaTask.configureDokkaDefaults() {
+    val appName = getAppName() // your custom util (fallback to applicationId if needed)
+    moduleName.set("$appName v${android.defaultConfig.versionName}")
     dokkaSourceSets.configureEach {
-        //includeNonPublic.set(false)        // keep it public only
-        reportUndocumented.set(true)       // warn if you forgot docs
-        //skipEmptyPackages.set(true)     // cleaner output
-        suppressInheritedMembers.set(true) // hide inherited Android/Java methods
+        reportUndocumented.set(true)       // warn if missing docs
+        skipEmptyPackages.set(true)        // skip empty packages
+        suppressInheritedMembers.set(false) // show inherited members
+        skipDeprecated.set(true)           // ✅ skip deprecated members here
     }
 }
-
-tasks.register<org.jetbrains.dokka.gradle.DokkaTask>("dokkaHtmlTest") {
-    outputDirectory.set(layout.buildDirectory.dir("dokka/htmlTest"))
-    configureDokkaDefaults()
+tasks.dokkaGfm.configure {
+    val appName = getAppName() // your custom util (fallback to applicationId if needed)
+    moduleName.set("$appName v${android.defaultConfig.versionName}")
+    dokkaSourceSets.configureEach {
+        reportUndocumented.set(true)       // warn if missing docs
+        skipEmptyPackages.set(true)        // skip empty packages
+        suppressInheritedMembers.set(false) // show inherited members
+        skipDeprecated.set(true)           // ✅ skip deprecated members here
+    }
+    pluginsMapConfiguration.set(
+            mapOf(
+                    "org.jetbrains.dokka.base.DokkaBase" to
+                            """{ "separateInheritedMembers": true }"""
+                 )
+                               )
+}
+tasks.dokkaHtml.configure {
+    val appName = getAppName() // your custom util (fallback to applicationId if needed)
+    moduleName.set("$appName v${android.defaultConfig.versionName}")
+    dokkaSourceSets.configureEach {
+        reportUndocumented.set(true)       // warn if missing docs
+        skipEmptyPackages.set(true)        // skip empty packages
+        suppressInheritedMembers.set(false) // show inherited members
+        skipDeprecated.set(true)           // ✅ skip deprecated members here
+    }
+    pluginsMapConfiguration.set(
+            mapOf(
+                    "org.jetbrains.dokka.base.DokkaBase" to
+                            """{ "separateInheritedMembers": true }"""
+                 )
+                               )
 }
 
-tasks.register<org.jetbrains.dokka.gradle.DokkaTask>("dokkaMarkdownTest") {
-    outputDirectory.set(layout.buildDirectory.dir("dokka/markdownTest"))
-    configureDokkaDefaults()
+
+
+
+
+// --------------------
+// Different Outputs
+// --------------------
+
+// HTML docs → project-root/dokka/html
+tasks.dokkaHtml.configure {
+    outputDirectory.set(projectDir.resolve("dokka/html"))
 }
 
-tasks.register<org.jetbrains.dokka.gradle.DokkaTask>("dokkaMyJavadoc") {
-    outputDirectory.set(layout.buildDirectory.dir("dokka/myJavadoc"))
-    configureDokkaDefaults()
+// Javadoc style HTML → project-root/dokka/javadoc
+tasks.dokkaJavadoc.configure {
+    outputDirectory.set(projectDir.resolve("dokka/javadoc"))
 }
 
-tasks.register<org.jetbrains.dokka.gradle.DokkaTask>("dokkaMyGfmDocs") {
-    outputDirectory.set(layout.buildDirectory.dir("dokka/gfmDocs"))
-    configureDokkaDefaults()
+// GitHub Flavored Markdown → project-root/dokka/gfm
+tasks.dokkaGfm.configure {
+    outputDirectory.set(projectDir.resolve("dokka/gfm"))
 }
 
-tasks.named<org.jetbrains.dokka.gradle.DokkaTask>("dokkaJekyll") {
-    outputDirectory.set(layout.buildDirectory.dir("dokka/jekyll"))
-    configureDokkaDefaults()
+// Jekyll Markdown → project-root/dokka/jekyll
+tasks.dokkaGfm.configure {
+    outputDirectory.set(projectDir.resolve("dokka/jekyll"))
 }
-
 /**
  * ✅ Summary: Recommendation:
  *   - dokkaHtml → Rich, browser-friendly docs with navigation.
@@ -155,4 +195,13 @@ fun getAppName(): String {
     }
     return project.name
 }
+
+/**
+ * ./gradlew dokkaHtml        # → HTML
+ * ./gradlew dokkaMarkdown    # → Plain Markdown
+ * ./gradlew dokkaGfm         # → GitHub Flavored Markdown (.md)
+ * ./gradlew dokkaJavadoc     # → Javadoc-style HTML
+ * ./gradlew dokkaJekyll      # → Jekyll Markdown
+ *
+ */
 

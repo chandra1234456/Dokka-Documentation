@@ -12,7 +12,7 @@ A simple Android app built with **Kotlin** that allows users to create, edit, an
 ## ⚙️ Setup Instructions
 1. Clone the repo:
    ```bash
-   git clone https://github.com/username/myapp.git
+   https://github.com/chandra1234456/Dokka-Documentation.git
 
 ---
 ```
@@ -44,31 +44,29 @@ run this in terminal
   Generates output compatible with **Jekyll static site generators**.  
   ✅ Perfect if you want to publish docs via **GitHub Pages** or another Jekyll-based site.
 
-
-## Main Output Formats
-
+  
 # 📚 Dokka Output Formats
 
-# 1. dokkaHtml
-#    → Rich, navigable HTML website with search & navigation.
-#    ✅ Best for hosting on a web server or opening locally in a browser.
+## 1. dokkaHtml
+    → Rich, navigable HTML website with search & navigation.
+    ✅ Best for hosting on a web server or opening locally in a browser.
 
-# 2. dokkaMarkdown
-#    → Generates .md files for each package/class.
-#    ✅ Best for GitHub, GitLab, Bitbucket, or wikis.
-#    💡 You can later convert Markdown → PDF (Pandoc, Typora, or plugin).
+## 2. dokkaMarkdown
+    → Generates .md files for each package/class.
+    ✅ Best for GitHub, GitLab, Bitbucket, or wikis.
+   💡 You can later convert Markdown → PDF (Pandoc, Typora, or plugin).
 
-# 3. dokkaJavadoc
-#    → Javadoc-style HTML output.
-#    ✅ Useful if your project mixes Java/Kotlin or needs Javadoc-like docs.
+## 3. dokkaJavadoc
+    → Javadoc-style HTML output.
+    ✅ Useful if your project mixes Java/Kotlin or needs Javadoc-like docs.
 
-# 4. dokkaGfm (GitHub Flavored Markdown)
-#    → Markdown output tuned for GitHub rendering.
-#    ✅ Looks better in GitHub repos.
+## 4. dokkaGfm (GitHub Flavored Markdown)
+    → Markdown output tuned for GitHub rendering.
+    ✅ Looks better in GitHub repos.
 
-# 5. dokkaJekyll
-#    → Outputs docs in Jekyll format.
-#    ✅ Great if you want to integrate into static site generators.
+## 5. dokkaJekyll
+   → Outputs docs in Jekyll format.
+  ✅ Great if you want to integrate into static site generators.
 
 
 ## 6. 📚 Usage Examples
@@ -76,10 +74,8 @@ Show **how to use main functionalities** (like API calls or UI flows).
 
 ```markdown
 ## 📚 Usage
-### Add a new note
-1. Tap the `+` button
-2. Enter your note details
-3. Save → Appears in notes list
+
+
 ```
 ## 🔧 Troubleshooting
 - **App crashes at start?** → Check if `google-services.json` is added

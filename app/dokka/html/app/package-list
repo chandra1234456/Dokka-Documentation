@@ -1,0 +1,12 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.chandra.practice.dokkadocs////PointingToDeclaration/app/com.chandra.practice.dokkadocs/index.html
+$dokka.location:com.chandra.practice.dokkadocs//generateMD5/#kotlin.String/PointingToDeclaration/app/com.chandra.practice.dokkadocs/generate-m-d5.html
+$dokka.location:com.chandra.practice.dokkadocs//generateRandomUUID/#/PointingToDeclaration/app/com.chandra.practice.dokkadocs/generate-random-u-u-i-d.html
+$dokka.location:com.chandra.practice.dokkadocs//main/#/PointingToDeclaration/app/com.chandra.practice.dokkadocs/main.html
+$dokka.location:com.chandra.practice.dokkadocs//multiply/#kotlin.Int#kotlin.Int/PointingToDeclaration/app/com.chandra.practice.dokkadocs/multiply.html
+$dokka.location:com.chandra.practice.dokkadocs/MainActivity///PointingToDeclaration/app/com.chandra.practice.dokkadocs/-main-activity/index.html
+$dokka.location:com.chandra.practice.dokkadocs/MainActivity/MainActivity/#/PointingToDeclaration/app/com.chandra.practice.dokkadocs/-main-activity/-main-activity.html
+$dokka.location:com.chandra.practice.dokkadocs/MainActivity/addNumbers/#kotlin.Int#kotlin.Int/PointingToDeclaration/app/com.chandra.practice.dokkadocs/-main-activity/add-numbers.html
+com.chandra.practice.dokkadocs
+
