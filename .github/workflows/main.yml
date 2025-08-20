@@ -1,4 +1,4 @@
-name: CI Example
+name: CI
 
 on:
   push:
@@ -21,6 +21,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        # optional if in subfolder:
+        # working-directory: ./your-subfolder
 
       - name: Run tests
         run: npm test
